@@ -21,7 +21,7 @@ jobs:
       - name: Install Databricks CLI
         run: pip install databricks-cli
 
-      - name: Deploy notebook to Databricks
+      - name: Deploy main notebook to Databricks
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
@@ -31,4 +31,16 @@ jobs:
             /Users/venkyram718@gmail.com/patient_data_processing \
             --language PYTHON \
             --format JUPYTER \
+            --overwrite
+
+      - name: Deploy masking script to Databricks
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+        run: |
+          databricks workspace import \
+            patient_masking.py \
+            /Users/venkyram718@gmail.com/patient_masking \
+            --language PYTHON \
+            --format SOURCE \
             --overwrite
